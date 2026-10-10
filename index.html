@@ -4,481 +4,107 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Alex Mangerian — Projects</title>
-<meta name="description" content="Browser-based tools for psychiatry and internal medicine: a network-neuroscience atlas, a personalized research feed, board-review games, a study dashboard, and a CPAP tracker.">
+<meta name="description" content="Projects by Alex Mangerian.">
 <meta name="theme-color" content="#0e1116">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230e1116'/><circle cx='10' cy='11' r='3' fill='%237dd3fc'/><circle cx='22' cy='9' r='2.4' fill='%23a78bfa'/><circle cx='16' cy='22' r='2.8' fill='%235eead4'/><g stroke='%2394a3b8' stroke-width='1.4' opacity='.8'><line x1='10' y1='11' x2='22' y2='9'/><line x1='10' y1='11' x2='16' y2='22'/><line x1='22' y1='9' x2='16' y2='22'/></g></svg>">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
 :root{
-  --bg:#0e1116;
-  --bg-2:#141922;
-  --card:#151b24;
-  --card-hover:#1a2130;
-  --line:#252d3a;
-  --line-soft:#1d2431;
-  --text:#e8edf5;
-  --text-dim:#9aa8bd;
-  --text-faint:#6b7a90;
-  --accent:#7dd3fc;
-  --radius:16px;
-  --maxw:1120px;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -12px rgba(0,0,0,.6);
-  --serif:ui-serif,Georgia,'Iowan Old Style','Times New Roman',serif;
+  --bg:#0e1116; --card:#151a22; --hover:#1a202a; --line:#232a36;
+  --text:#e8edf5; --dim:#8a97ab;
   --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,Helvetica,Arial,sans-serif;
-  --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
 }
-
 @media (prefers-color-scheme: light){
-  :root{
-    --bg:#f7f8fa;
-    --bg-2:#eef1f6;
-    --card:#ffffff;
-    --card-hover:#ffffff;
-    --line:#dfe4ec;
-    --line-soft:#e9edf3;
-    --text:#141a22;
-    --text-dim:#55637a;
-    --text-faint:#8794a8;
-    --accent:#0369a1;
-    --shadow:0 1px 2px rgba(16,24,40,.06), 0 12px 28px -14px rgba(16,24,40,.22);
-  }
+  :root{ --bg:#f6f7f9; --card:#fff; --hover:#fff; --line:#e1e5ec; --text:#141a22; --dim:#66738a; }
 }
-
-html{-webkit-text-size-adjust:100%}
 body{
-  font-family:var(--sans);
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  min-height:100vh;
-  overflow-x:hidden;
+  font-family:var(--sans); background:var(--bg); color:var(--text);
+  -webkit-font-smoothing:antialiased; min-height:100vh;
+  display:flex; flex-direction:column; align-items:center;
+  padding:clamp(48px, 12vh, 120px) 16px 48px;
 }
+main{width:100%; max-width:760px}
+h1{font-size:1.25rem; font-weight:600; letter-spacing:-.01em}
+h1 span{color:var(--dim); font-weight:400}
 
-/* ---------- ambient background ---------- */
-#field{
-  position:fixed; inset:0; z-index:0; pointer-events:none;
-  opacity:.5;
-}
-@media (prefers-color-scheme: light){ #field{opacity:.42} }
-body::before{
-  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
-  background:
-    radial-gradient(720px 420px at 12% -8%, rgba(125,211,252,.13), transparent 65%),
-    radial-gradient(680px 420px at 92% 4%, rgba(167,139,250,.11), transparent 62%),
-    radial-gradient(900px 600px at 50% 108%, rgba(94,234,212,.07), transparent 70%);
-}
-@media (prefers-color-scheme: light){
-  body::before{
-    background:
-      radial-gradient(720px 420px at 12% -8%, rgba(3,105,161,.10), transparent 65%),
-      radial-gradient(680px 420px at 92% 4%, rgba(124,58,237,.08), transparent 62%),
-      radial-gradient(900px 600px at 50% 108%, rgba(13,148,136,.07), transparent 70%);
-  }
-}
-
-.wrap{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:0 24px}
-
-/* ---------- header ---------- */
-header{padding:76px 0 8px}
-.eyebrow{
-  font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--text-faint); display:flex; align-items:center; gap:10px; margin-bottom:22px;
-}
-.eyebrow::after{content:''; flex:1; height:1px; background:var(--line); max-width:180px}
-
-h1{
-  font-family:var(--serif);
-  font-size:clamp(2.4rem, 6.4vw, 4rem);
-  line-height:1.06;
-  letter-spacing:-.022em;
-  font-weight:600;
-}
-h1 .accent{
-  background:linear-gradient(100deg, var(--accent), #a78bfa 58%, #5eead4);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-.lede{
-  margin-top:20px; max-width:62ch; font-size:clamp(1rem, 2.2vw, 1.145rem);
-  color:var(--text-dim);
-}
-.lede strong{color:var(--text); font-weight:600}
-
-.meta-row{
-  margin-top:30px; padding-bottom:8px;
-  display:flex; flex-wrap:wrap; gap:10px 26px; align-items:center;
-  font-size:13.5px; color:var(--text-faint);
-}
-.meta-row b{color:var(--text-dim); font-weight:600; font-variant-numeric:tabular-nums}
-.meta-row a{color:var(--text-dim); text-decoration:none; border-bottom:1px solid var(--line)}
-.meta-row a:hover{color:var(--accent); border-bottom-color:var(--accent)}
-
-/* ---------- filters ---------- */
-.filters{
-  margin:44px 0 26px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;
-  border-top:1px solid var(--line-soft); padding-top:26px;
-}
-.filters .label{
-  font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase;
-  color:var(--text-faint); margin-right:6px;
-}
-.chip{
-  font:inherit; font-size:13px; cursor:pointer;
-  background:transparent; color:var(--text-dim);
-  border:1px solid var(--line); border-radius:999px; padding:5px 13px;
-  transition:background .16s, color .16s, border-color .16s;
-}
-.chip:hover{color:var(--text); border-color:var(--text-faint)}
-.chip[aria-pressed="true"]{
-  background:var(--text); color:var(--bg); border-color:var(--text); font-weight:600;
-}
-
-/* ---------- cards ---------- */
 .grid{
-  display:grid; gap:20px;
-  grid-template-columns:repeat(auto-fill, minmax(330px, 1fr));
-  padding-bottom:8px;
+  list-style:none; margin-top:28px;
+  display:grid; gap:12px; grid-template-columns:repeat(2, minmax(0,1fr));
 }
-
-.card{
-  position:relative; display:flex; flex-direction:column;
-  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
-  padding:26px 26px 22px; overflow:hidden;
-  transition:transform .22s cubic-bezier(.2,.8,.3,1), border-color .22s, box-shadow .22s, background .22s;
+.grid a{
+  display:flex; align-items:center; gap:14px;
+  padding:14px 16px; border-radius:14px;
+  background:var(--card); border:1px solid var(--line);
+  color:inherit; text-decoration:none;
+  transition:transform .18s ease, border-color .18s, background .18s;
 }
-.card::before{
-  content:''; position:absolute; inset:0 0 auto 0; height:3px;
-  background:linear-gradient(90deg, var(--c1), var(--c2));
-  opacity:.85; transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
+.grid a:hover, .grid a:focus-visible{
+  transform:translateY(-2px); background:var(--hover);
+  border-color:color-mix(in srgb, var(--c) 55%, var(--line));
+  outline:none;
 }
-.card:hover, .card:focus-within{
-  transform:translateY(-3px); border-color:var(--line);
-  background:var(--card-hover); box-shadow:var(--shadow);
-}
-.card:hover::before, .card:focus-within::before{transform:scaleX(1)}
-.card.hidden{display:none}
-
-.card-top{display:flex; align-items:flex-start; gap:15px; margin-bottom:15px}
 .glyph{
-  flex:none; width:52px; height:52px; border-radius:13px;
-  display:grid; place-items:center;
-  background:linear-gradient(145deg, color-mix(in srgb, var(--c1) 22%, transparent), color-mix(in srgb, var(--c2) 16%, transparent));
-  border:1px solid color-mix(in srgb, var(--c1) 32%, var(--line));
+  flex:none; width:42px; height:42px; border-radius:11px;
+  display:grid; place-items:center; color:var(--c);
+  background:color-mix(in srgb, var(--c) 14%, transparent);
 }
-.glyph svg{width:28px; height:28px; display:block}
+.glyph svg{width:23px; height:23px}
+@media (prefers-color-scheme: light){
+  .glyph{color:color-mix(in srgb, var(--c) 62%, #000); background:color-mix(in srgb, var(--c) 22%, transparent)}
+}
+.name{font-weight:600; font-size:15px; line-height:1.3}
+.what{color:var(--dim); font-size:13px; line-height:1.35; margin-top:2px}
+.arrow{margin-left:auto; color:var(--dim); transition:transform .18s, color .18s}
+.grid a:hover .arrow{transform:translateX(3px); color:var(--c)}
 
-.card h2{
-  font-family:var(--serif); font-size:1.32rem; font-weight:600;
-  letter-spacing:-.012em; line-height:1.24; margin-top:2px;
-}
-.card h2 a{
-  color:var(--text); text-decoration:none;
-}
-.card h2 a::after{content:''; position:absolute; inset:0} /* whole card is the link */
-.card:hover h2 a{color:var(--accent)}
-.kicker{
-  font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
-  color:var(--text-faint); margin-top:6px;
-}
+footer{margin-top:36px; font-size:12.5px}
+footer a{color:var(--dim); text-decoration:none}
+footer a:hover{color:var(--text)}
 
-.card p{color:var(--text-dim); font-size:14.6px; flex:1}
-
-.tags{display:flex; flex-wrap:wrap; gap:6px; margin:17px 0 0}
-.tag{
-  font-size:11.5px; color:var(--text-faint);
-  border:1px solid var(--line-soft); border-radius:6px; padding:2.5px 8px;
-  background:var(--bg-2);
-}
-
-.card-foot{
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  margin-top:20px; padding-top:15px; border-top:1px solid var(--line-soft);
-  font-size:13px;
-}
-.open{
-  display:inline-flex; align-items:center; gap:7px;
-  color:var(--text); font-weight:600;
-}
-.open .arrow{transition:transform .22s ease; display:inline-block}
-.card:hover .open{color:var(--accent)}
-.card:hover .open .arrow{transform:translateX(4px)}
-.src{
-  position:relative; z-index:2; /* sits above the card-wide link */
-  color:var(--text-faint); text-decoration:none; font-family:var(--mono); font-size:11.5px;
-  border-bottom:1px solid transparent; padding-bottom:1px;
-}
-.src:hover{color:var(--text-dim); border-bottom-color:var(--line)}
-
-/* ---------- footer ---------- */
-footer{
-  margin-top:64px; padding:30px 0 60px; border-top:1px solid var(--line-soft);
-  display:flex; flex-wrap:wrap; gap:12px 28px; align-items:baseline;
-  font-size:13px; color:var(--text-faint);
-}
-footer a{color:var(--text-dim); text-decoration:none; border-bottom:1px solid var(--line)}
-footer a:hover{color:var(--accent); border-bottom-color:var(--accent)}
-.spacer{flex:1; min-width:20px}
-
-@media (max-width:640px){
-  header{padding-top:52px}
-  .wrap{padding:0 18px}
-  .grid{grid-template-columns:1fr; gap:16px}
-  .card{padding:22px 20px 18px}
-}
-@media (prefers-reduced-motion: reduce){
-  *{animation:none !important; transition:none !important}
-}
+@media (max-width:560px){ .grid{grid-template-columns:1fr} }
+@media (prefers-reduced-motion: reduce){ *{transition:none !important} }
 </style>
 </head>
 <body>
-
-<canvas id="field" aria-hidden="true"></canvas>
-
-<div class="wrap">
-
-  <header>
-    <div class="eyebrow">Alex Mangerian</div>
-    <h1>Things I built that<br>run in a <span class="accent">browser tab</span>.</h1>
-    <p class="lede">
-      Study tools, clinical trackers, and one atlas of the brain — written for
-      psychiatry and internal medicine training. Every one of them is a
-      <strong>single HTML file</strong>: no accounts, no servers, nothing leaves the device.
-      Open one and it works, including on a phone with no signal.
-    </p>
-    <div class="meta-row">
-      <span><b id="count">5</b> projects</span>
-      <span>All open source</span>
-      <span>Hosted on <a href="https://github.com/amangerian" rel="noopener">GitHub Pages</a></span>
-    </div>
-  </header>
-
-  <nav class="filters" id="filters" aria-label="Filter projects by topic">
-    <span class="label">Filter</span>
-  </nav>
-
-  <main class="grid" id="grid"></main>
-
-  <footer>
-    <span>Built with Claude Code.</span>
-    <span class="spacer"></span>
-    <span><a href="https://github.com/amangerian" rel="noopener">github.com/amangerian</a></span>
-  </footer>
-
-</div>
+<main>
+  <h1>Alex Mangerian <span>· Projects</span></h1>
+  <ul class="grid" id="grid"></ul>
+  <footer><a href="https://github.com/amangerian" rel="noopener">github.com/amangerian</a></footer>
+</main>
 
 <script>
 /* ==========================================================================
    SITE REGISTRY START
-   One object per project. `url` is the live page, `repo` the GitHub repo name.
-   `icon` picks a glyph from the ICONS map further down.
-   To add a project: append an object here. Nothing else needs to change.
+   One object per site. To add one, append an object — nothing else changes.
+   icon: network | feed | board | dashboard | paw | breath
    ========================================================================== */
 const SITES = [
-  {
-    id: 'neuronet-atlas',
-    title: 'NeuroNet Atlas',
-    kicker: 'Interactive atlas',
-    url: 'https://amangerian.github.io/neuronet-atlas/',
-    repo: 'neuronet-atlas',
-    icon: 'network',
-    c1: '#7dd3fc', c2: '#3b82f6',
-    blurb: 'Six psychiatric conditions read through four models of network neuroscience, mapped onto a rotatable 3D brain — with cellular-scale explainers for the cortical column and the pyramidal neuron, and a transdiagnostic comparison across all six.',
-    topics: ['Neuroscience'],
-    tags: ['3D brain', 'Explainer', 'Reference']
-  },
-  {
-    id: 'yourjournal',
-    title: 'Your Journal',
-    kicker: 'Research feed',
-    url: 'https://amangerian.github.io/yourjournal/',
-    repo: 'yourjournal',
-    icon: 'feed',
-    c1: '#a78bfa', c2: '#8b5cf6',
-    blurb: 'A weekly feed of newly indexed medical research, ranked against your own interests. A short this-or-that round calibrates what you care about, then scoring runs locally — every article and every rating stays in your browser.',
-    topics: ['Research'],
-    tags: ['Weekly', 'Personalized', 'No backend']
-  },
-  {
-    id: 'mpboardstudy',
-    title: 'Board Study Games',
-    kicker: 'Review games',
-    url: 'https://amangerian.github.io/MPboardstudy/',
-    repo: 'MPboardstudy',
-    icon: 'board',
-    c1: '#fbbf24', c2: '#f59e0b',
-    blurb: 'Jeopardy boards for psychiatry and neurology review — antidepressants, depression, neuro and double neuro — plus Wizard’s Escape, a haunted-castle speed round that turns any of those clue banks into a one- or two-player race.',
-    topics: ['Board review'],
-    tags: ['Jeopardy', '1–2 players', 'Speed round']
-  },
-  {
-    id: 'med-board',
-    title: 'MedBoard Prep',
-    kicker: 'Study dashboard',
-    url: 'https://amangerian.github.io/med-board/',
-    repo: 'med-board',
-    icon: 'dashboard',
-    c1: '#5eead4', c2: '#14b8a6',
-    blurb: 'A residency dashboard for internal medicine and psychiatry: spaced-repetition cards, weak-area drilling, ITE, PRITE and MKSAP analyzers, exam-readiness projections, and a streak aviary that grows as you keep at it.',
-    topics: ['Board review'],
-    tags: ['Spaced repetition', 'Analytics', 'Installable']
-  },
-  {
-    id: 'cpap',
-    title: 'CPAP Maintenance',
-    kicker: 'Upkeep tracker',
-    url: 'https://amangerian.github.io/CPAPMaintain/',
-    repo: 'CPAPMaintain',
-    icon: 'breath',
-    c1: '#f9a8d4', c2: '#ec4899',
-    blurb: 'A phone-first tracker for CPAP upkeep — what was last cleaned, what was last replaced, and what is due next. Add it to the home screen and it opens full-screen and works with no signal.',
-    topics: ['Clinical'],
-    tags: ['Reminders', 'Installable', 'Offline']
-  }
+  { title: 'NeuroNet Atlas',    what: '3D brain network atlas',    url: 'https://amangerian.github.io/neuronet-atlas/', icon: 'network',   color: '#7dd3fc' },
+  { title: 'Your Journal',      what: 'Personalized research feed', url: 'https://amangerian.github.io/yourjournal/',    icon: 'feed',      color: '#a78bfa' },
+  { title: 'Board Study Games', what: 'Jeopardy & review games',    url: 'https://amangerian.github.io/MPboardstudy/',   icon: 'board',     color: '#fbbf24' },
+  { title: 'MedBoard Prep',     what: 'Board study dashboard',      url: 'https://amangerian.github.io/med-board/',      icon: 'dashboard', color: '#5eead4' },
+  { title: '3D Zoo',            what: 'Zoo tycoon game',            url: 'https://amangerian.github.io/3DZoo/',          icon: 'paw',       color: '#86efac' },
+  { title: 'CPAP Maintenance',  what: 'CPAP upkeep tracker',        url: 'https://amangerian.github.io/CPAPMaintain/',   icon: 'breath',    color: '#f9a8d4' }
 ];
 /* SITE REGISTRY END */
 
 const ICONS = {
-  network: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-    <path d="M6.6 8.2 17 5.6M6.6 8.2l4.9 9.4M17 5.6l-5.5 12" opacity=".55"/>
-    <circle cx="6.6" cy="8.2" r="2.6" fill="currentColor" stroke="none" opacity=".9"/>
-    <circle cx="17" cy="5.6" r="2" fill="currentColor" stroke="none" opacity=".6"/>
-    <circle cx="11.5" cy="17.6" r="2.3" fill="currentColor" stroke="none" opacity=".75"/>
-    <circle cx="19.4" cy="15.4" r="1.5" fill="currentColor" stroke="none" opacity=".45"/>
-    <path d="M11.5 17.6h7.9" opacity=".4"/>
-  </svg>`,
-  feed: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-    <rect x="3.2" y="4.4" width="17.6" height="15.2" rx="2.6" opacity=".55"/>
-    <path d="M6.6 8.6h7.2M6.6 12h10.8M6.6 15.4h6"/>
-    <circle cx="17.4" cy="8.6" r="1.7" fill="currentColor" stroke="none"/>
-  </svg>`,
-  board: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-    <rect x="3" y="4" width="18" height="16" rx="2.4" opacity=".55"/>
-    <path d="M9 4v16M15 4v16M3 9.4h18M3 14.8h18" opacity=".45"/>
-    <rect x="9.9" y="10.3" width="4.2" height="3.6" rx="1" fill="currentColor" stroke="none"/>
-  </svg>`,
-  dashboard: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-    <path d="M4 19.4V13M9.3 19.4V7.6M14.6 19.4v-4.2M19.9 19.4V4.6" opacity=".85"/>
-    <path d="M3 19.4h18" opacity=".4"/>
-  </svg>`,
-  breath: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-    <path d="M4.4 9.2c1.9-2.4 4.2-2.4 6.1 0s4.2 2.4 6.1 0" opacity=".5"/>
-    <path d="M4.4 13.4c1.9-2.4 4.2-2.4 6.1 0s4.2 2.4 6.1 0"/>
-    <path d="M4.4 17.6c1.9-2.4 4.2-2.4 6.1 0s4.2 2.4 6.1 0" opacity=".5"/>
-    <circle cx="19.6" cy="6.2" r="1.8" fill="currentColor" stroke="none" opacity=".7"/>
-  </svg>`
+  network: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6.6 8.2 17 5.6M6.6 8.2l4.9 9.4M17 5.6l-5.5 12" opacity=".55"/><circle cx="6.6" cy="8.2" r="2.6" fill="currentColor" stroke="none"/><circle cx="17" cy="5.6" r="2" fill="currentColor" stroke="none" opacity=".7"/><circle cx="11.5" cy="17.6" r="2.3" fill="currentColor" stroke="none" opacity=".85"/></svg>',
+  feed: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3.2" y="4.4" width="17.6" height="15.2" rx="2.6" opacity=".55"/><path d="M6.6 8.6h7.2M6.6 12h10.8M6.6 15.4h6"/><circle cx="17.4" cy="8.6" r="1.7" fill="currentColor" stroke="none"/></svg>',
+  board: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2.4" opacity=".55"/><path d="M9 4v16M15 4v16M3 9.4h18M3 14.8h18" opacity=".45"/><rect x="9.9" y="10.3" width="4.2" height="3.6" rx="1" fill="currentColor" stroke="none"/></svg>',
+  dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19.4V13M9.3 19.4V7.6M14.6 19.4v-4.2M19.9 19.4V4.6"/><path d="M3 19.4h18" opacity=".4"/></svg>',
+  paw: '<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="11.2" rx="1.9" ry="2.4" opacity=".8"/><ellipse cx="18.4" cy="11.2" rx="1.9" ry="2.4" opacity=".8"/><ellipse cx="9" cy="6.6" rx="1.9" ry="2.5" opacity=".8"/><ellipse cx="15" cy="6.6" rx="1.9" ry="2.5" opacity=".8"/></svg>',
+  breath: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4.4 9.2c1.9-2.4 4.2-2.4 6.1 0s4.2 2.4 6.1 0" opacity=".5"/><path d="M4.4 13.4c1.9-2.4 4.2-2.4 6.1 0s4.2 2.4 6.1 0"/><path d="M4.4 17.6c1.9-2.4 4.2-2.4 6.1 0s4.2 2.4 6.1 0" opacity=".5"/></svg>'
 };
 
-/* ---------- render ---------- */
-const grid = document.getElementById('grid');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-
-grid.innerHTML = SITES.map(s => `
-  <article class="card" data-topics="${esc(s.topics.join('|').toLowerCase())}" style="--c1:${esc(s.c1)};--c2:${esc(s.c2)}">
-    <div class="card-top">
-      <div class="glyph" style="color:${esc(s.c1)}" aria-hidden="true">${ICONS[s.icon] || ICONS.network}</div>
-      <div>
-        <h2><a href="${esc(s.url)}" rel="noopener">${esc(s.title)}</a></h2>
-        <div class="kicker">${esc(s.kicker)}</div>
-      </div>
-    </div>
-    <p>${esc(s.blurb)}</p>
-    <div class="tags">${s.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
-    <div class="card-foot">
-      <span class="open">Open site <span class="arrow">&rarr;</span></span>
-      <a class="src" href="https://github.com/amangerian/${esc(s.repo)}" rel="noopener">source</a>
-    </div>
-  </article>
-`).join('');
-
-document.getElementById('count').textContent = SITES.length;
-
-/* ---------- filters ---------- */
-const topics = [...new Set(SITES.flatMap(s => s.topics))].sort((a, b) => a.localeCompare(b));
-const filters = document.getElementById('filters');
-const mkChip = (label, value, on) => {
-  const b = document.createElement('button');
-  b.className = 'chip'; b.textContent = label;
-  b.dataset.value = value; b.setAttribute('aria-pressed', on ? 'true' : 'false');
-  filters.appendChild(b); return b;
-};
-mkChip('All', '', true);
-topics.forEach(t => mkChip(t, t.toLowerCase(), false));
-
-filters.addEventListener('click', e => {
-  const chip = e.target.closest('.chip');
-  if (!chip) return;
-  [...filters.querySelectorAll('.chip')].forEach(c =>
-    c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
-  const v = chip.dataset.value;
-  let shown = 0;
-  document.querySelectorAll('.card').forEach(card => {
-    const hit = !v || card.dataset.topics.split('|').includes(v);
-    card.classList.toggle('hidden', !hit);
-    if (hit) shown++;
-  });
-  document.getElementById('count').textContent = shown;
-});
-
-/* ---------- ambient node field ---------- */
-(function () {
-  const canvas = document.getElementById('field');
-  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const ctx = canvas.getContext('2d');
-  let w, h, dpr, nodes = [], raf;
-
-  const ink = () => window.matchMedia('(prefers-color-scheme: light)').matches
-    ? [3, 105, 161] : [148, 178, 216];
-
-  function size() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = canvas.width = innerWidth * dpr;
-    h = canvas.height = innerHeight * dpr;
-    canvas.style.width = innerWidth + 'px';
-    canvas.style.height = innerHeight + 'px';
-    const n = Math.round(Math.min(46, Math.max(16, innerWidth / 34)));
-    nodes = Array.from({ length: n }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - .5) * .16 * dpr, vy: (Math.random() - .5) * .16 * dpr,
-      r: (Math.random() * 1.5 + .9) * dpr
-    }));
-  }
-
-  function frame() {
-    const [R, G, B] = ink();
-    const link = 132 * dpr;
-    ctx.clearRect(0, 0, w, h);
-    for (const p of nodes) {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-    }
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const a = nodes[i], b = nodes[j];
-        const d = Math.hypot(a.x - b.x, a.y - b.y);
-        if (d < link) {
-          ctx.strokeStyle = `rgba(${R},${G},${B},${(1 - d / link) * .17})`;
-          ctx.lineWidth = .7 * dpr;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-        }
-      }
-    }
-    ctx.fillStyle = `rgba(${R},${G},${B},.3)`;
-    for (const p of nodes) {
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
-    }
-    raf = requestAnimationFrame(frame);
-  }
-
-  size(); frame();
-  addEventListener('resize', () => { cancelAnimationFrame(raf); size(); frame(); });
-  document.addEventListener('visibilitychange', () => {
-    cancelAnimationFrame(raf);
-    if (!document.hidden) frame();
-  });
-})();
+document.getElementById('grid').innerHTML = SITES.map(s => `
+  <li><a href="${esc(s.url)}" rel="noopener" style="--c:${esc(s.color)}">
+    <span class="glyph" aria-hidden="true">${ICONS[s.icon] || ICONS.network}</span>
+    <span><span class="name">${esc(s.title)}</span><span class="what" style="display:block">${esc(s.what)}</span></span>
+    <span class="arrow" aria-hidden="true">&rarr;</span>
+  </a></li>`).join('');
 </script>
 </body>
 </html>
