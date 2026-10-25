@@ -18,7 +18,7 @@ Append one line to the `SITES` array between the `SITE REGISTRY START` /
 { title: 'Display Name', what: 'Three-word description', url: 'https://amangerian.github.io/<repo>/', icon: 'network', color: '#7dd3fc' },
 ```
 
-`icon` is one of: `network` · `feed` · `board` · `dashboard` · `paw` · `breath`.
+`icon` is one of: `network` · `feed` · `board` · `dashboard` · `paw` · `breath` · `heart`.
 
 ## Sites
 
@@ -30,3 +30,4 @@ Append one line to the `SITES` array between the `SITE REGISTRY START` /
 | MedBoard Prep | `med-board` | https://amangerian.github.io/med-board/ |
 | 3D Zoo | `3DZoo` | https://amangerian.github.io/3DZoo/ |
 | CPAP Maintenance | `CPAPMaintain` | https://amangerian.github.io/CPAPMaintain/ |
+| Wedding Quest | `Wedding-Quest` | https://amangerian.github.io/Wedding-Quest/ |
