@@ -30,4 +30,4 @@ Append one line to the `SITES` array between the `SITE REGISTRY START` /
 | MedBoard Prep | `med-board` | https://amangerian.github.io/med-board/ |
 | 3D Zoo | `3DZoo` | https://amangerian.github.io/3DZoo/ |
 | CPAP Maintenance | `CPAPMaintain` | https://amangerian.github.io/CPAPMaintain/ |
-| Wedding Quest | `Wedding-Quest` | https://amangerian.github.io/Wedding-Quest/ |
+| A Love Quest | `Wedding-Quest` | https://amangerian.github.io/Wedding-Quest/ |
